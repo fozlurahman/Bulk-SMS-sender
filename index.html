@@ -6,7 +6,7 @@
     </div> -->
 
     <!-- add a image at error-->
-    <div id="error-image-container" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 20px; width: 60%; max-width: 90vw;">
+    <div id="error-image-container" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;  width: 90%; max-width: 90vw;">
         <img id="error-image" src="" alt="Error" style="width: 100%; height: auto;">
         <button id="close-error-image" style="display:block; margin: 10px auto; padding: 5px 10px; background-color: #ff0000; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Close</button>
     </div>
@@ -61,9 +61,20 @@
 /* Responsive styling for smaller screens (phones) */
 @media (max-width: 600px) {
     #error-image-container {
-        width: 100%;
-        height: auto; /* Make the container take up 85% of the screen width on small devices */
-        padding: 10px; /* Reduce padding on smaller screens */
+        width: 120vw;
+        height: auto; /* Reduce padding on smaller screens */
+    }
+
+    #close-error-image {
+        padding: 5px 15px; /* Adjust button size for smaller screens */
+        font-size: 0.9em; /* Adjust the font size */
+    }
+}
+
+@media (max-width: 400px) {
+    #error-image-container {
+        width: 120vw;
+        height: auto;/* Reduce padding on smaller screens */
     }
 
     #close-error-image {
