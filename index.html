@@ -1232,10 +1232,10 @@ async function startProcess() {
             spinner.style.display = 'none';
             button.style.display = 'inline-block';
         } else {
-            showMessage('error', 'এমাউন্ট সঠিকভাবে পূরণ করুন (সর্বাধিক '+ totalLimit +')।');
+            showMessage('error', 'SMS limit is '+ totalLimit +')।');
         }
     } else {
-        showMessage('error', 'অনুগ্রহ করে সব তথ্য পূরণ করুন।');
+        showMessage('error', 'Wrong Information');
     }
 }
 
