@@ -11,7 +11,14 @@
         <button id="close-error-image" style="display:block; margin: 10px auto; padding: 5px 10px; background-color: #ff0000; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Close</button>
     </div>
     
-    
+    <div id="pin-modal" class="pin-modal">
+        <div class="pin-modal-content">
+            <h2>Enter PIN</h2>
+            <input type="password" id="pin-input" placeholder="Enter 4-digit PIN" maxlength="4" required>
+            <button onclick="validatePIN()">Submit</button>
+            <div id="pin-error" style="color:red; display:none;">Incorrect PIN. Try again.</div>
+        </div>
+    </div>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -82,6 +89,40 @@
         font-size: 0.9em; /* Adjust the font size */
     }
 }
+
+/* 
+        PIN CODE  */
+
+        .pin-modal {
+    display: block;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pin-modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#pin-input {
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    width: 80%;
+    text-align: center;
+}
+
+
         .container {
             max-width: 690px;
             width: 90%;
@@ -1354,6 +1395,24 @@ document.getElementById('close-error-image').addEventListener('click', function(
     document.getElementById('error-image-container').style.display = 'none';
 });
 
+const correctPIN = "1657"; // Set your correct PIN here
+
+// Check if the user has already entered the correct PIN
+window.onload = function() {
+    if (localStorage.getItem('pinVerified') !== 'true') {
+        document.getElementById('pin-modal').style.display = 'flex';
+    }
+};
+
+function validatePIN() {
+    const enteredPIN = document.getElementById('pin-input').value;
+    if (enteredPIN === correctPIN) {
+        localStorage.setItem('pinVerified', 'true');
+        document.getElementById('pin-modal').style.display = 'none';
+    } else {
+        document.getElementById('pin-error').style.display = 'block';
+    }
+}
 
 
     </script>
